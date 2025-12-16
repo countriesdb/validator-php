@@ -1,8 +1,32 @@
 # countriesdb/validator
 
-Backend validation package for CountriesDB. Provides server-side validation for country and subdivision codes.
+**Backend validation package for CountriesDB.** Provides server-side validation for country and subdivision codes using ISO 3166-1 and ISO 3166-2 standards.
 
-**Important**: This package only provides validation methods. Data fetching (`/api/countries`, `/api/countries/{country}/subdivisions`) is frontend-only and must be done through frontend packages.
+[![Latest Version](https://img.shields.io/packagist/v/countriesdb/validator.svg?style=flat-square)](https://packagist.org/packages/countriesdb/validator)
+[![Total Downloads](https://img.shields.io/packagist/dt/countriesdb/validator.svg?style=flat-square)](https://packagist.org/packages/countriesdb/validator)
+[![License](https://img.shields.io/packagist/l/countriesdb/validator.svg?style=flat-square)](https://packagist.org/packages/countriesdb/validator)
+
+📖 **[Full Documentation](https://countriesdb.com/docs/backend-api)** | 🌐 **[Website](https://countriesdb.com)**
+
+**Important**: This package only provides validation methods. Data fetching for frontend widgets must be done through frontend packages ([`@countriesdb/widget-core`](https://www.npmjs.com/package/@countriesdb/widget-core), [`@countriesdb/widget`](https://www.npmjs.com/package/@countriesdb/widget)).
+
+## Getting Started
+
+**⚠️ API Key Required:** This package requires a CountriesDB **private** API key to function. You must create an account at [countriesdb.com](https://countriesdb.com) to obtain your private API key. Test accounts are available with limited functionality.
+
+- 🔑 [Get your API key](https://countriesdb.com) - Create an account and get your private key
+- 📚 [View documentation](https://countriesdb.com/docs/backend-api) - Complete API reference and examples
+- 💬 [Support](https://countriesdb.com) - Get help and support
+
+## Features
+
+- ✅ **Laravel Validation Rules** - Drop-in validation rules (`ValidCountry`, `ValidSubdivision`) for Laravel forms
+- ✅ **Standalone Validator** - Use the `Validator` class directly in any PHP application
+- ✅ **ISO 3166 Compliant** - Validates ISO 3166-1 (countries) and ISO 3166-2 (subdivisions) codes
+- ✅ **Multiple Validation Options** - Support for `follow_upward`, `follow_related`, and `allow_parent_selection`
+- ✅ **Batch Validation** - Validate multiple countries or subdivisions in a single request
+- ✅ **Laravel 9-12 Support** - Compatible with Laravel 9.0, 10.0, 11.0, and 12.0
+- ✅ **Detailed Error Messages** - Returns specific error messages from the CountriesDB API
 
 ## Installation
 
