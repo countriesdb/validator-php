@@ -2,13 +2,13 @@
 
 namespace CountriesDB\Validator\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\ValidationRule;
 use CountriesDB\Validator\Validator;
 
 /**
  * Laravel validation rule for subdivision codes
  */
-class ValidSubdivision implements Rule
+class ValidSubdivision implements ValidationRule
 {
     private ?Validator $validator = null;
     private string $countryAttribute;
@@ -26,17 +26,19 @@ class ValidSubdivision implements Rule
     }
 
     /**
-     * Determine if the validation rule passes.
+     * Run the validation rule.
      *
      * @param  string  $attribute
      * @param  mixed  $value
-     * @return bool
+     * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @return void
      */
-    public function passes($attribute, $value)
+    public function validate(string $attribute, mixed $value, \Closure $fail): void
     {
         $apiKey = config('services.countriesdb.private_key');
         if (empty($apiKey)) {
-            return false;
+            $fail('CountriesDB API key is not configured.');
+            return;
         }
 
         if (!$this->validator) {
@@ -49,7 +51,8 @@ class ValidSubdivision implements Rule
         $country = $request->input($this->countryAttribute);
 
         if (empty($country)) {
-            return false;
+            $fail('The related country field is required before validating subdivisions.');
+            return;
         }
 
         $result = $this->validator->validateSubdivision(
@@ -59,17 +62,10 @@ class ValidSubdivision implements Rule
             $this->allowParentSelection
         );
 
-        return $result['valid'];
-    }
-
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
-    public function message()
-    {
-        return 'The :attribute must be a valid subdivision code for the selected country.';
+        if (!$result['valid']) {
+            $message = $result['message'] ?? 'The :attribute must be a valid subdivision code for the selected country.';
+            $fail($message);
+        }
     }
 }
 

@@ -2,16 +2,17 @@
 
 namespace CountriesDB\Validator\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\ValidationRule;
 use CountriesDB\Validator\Validator;
 
 /**
  * Laravel validation rule for country codes
  */
-class ValidCountry implements Rule
+class ValidCountry implements ValidationRule
 {
     private ?Validator $validator = null;
     private bool $followUpward;
+    private ?string $errorMessage = null;
 
     public function __construct(bool $followUpward = false)
     {
@@ -19,17 +20,19 @@ class ValidCountry implements Rule
     }
 
     /**
-     * Determine if the validation rule passes.
+     * Run the validation rule.
      *
      * @param  string  $attribute
      * @param  mixed  $value
-     * @return bool
+     * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @return void
      */
-    public function passes($attribute, $value)
+    public function validate(string $attribute, mixed $value, \Closure $fail): void
     {
         $apiKey = config('services.countriesdb.private_key');
         if (empty($apiKey)) {
-            return false;
+            $fail('CountriesDB API key is not configured.');
+            return;
         }
 
         if (!$this->validator) {
@@ -38,17 +41,11 @@ class ValidCountry implements Rule
         }
 
         $result = $this->validator->validateCountry($value, $this->followUpward);
-        return $result['valid'];
-    }
-
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
-    public function message()
-    {
-        return 'The :attribute must be a valid country code.';
+        
+        if (!$result['valid']) {
+            $message = $result['message'] ?? 'The :attribute must be a valid country code.';
+            $fail($message);
+        }
     }
 }
 

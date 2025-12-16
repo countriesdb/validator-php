@@ -1,7 +1,7 @@
 {
   "name": "countriesdb/validator",
   "description": "PHP validation client for CountriesDB with Laravel validation rules and a standalone Http-based validator for country and subdivision code checks against the CountriesDB backend API.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "library",
   "license": "proprietary",
   "homepage": "https://nayee.net",
