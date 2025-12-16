@@ -1,0 +1,43 @@
+{
+  "name": "countriesdb/validator",
+  "description": "PHP validation client for CountriesDB with Laravel validation rules and a standalone Http-based validator for country and subdivision code checks against the CountriesDB backend API.",
+  "version": "1.0.0",
+  "type": "library",
+  "license": "PROPRIETARY",
+  "homepage": "https://nayee.net",
+  "support": {
+    "source": "https://github.com/countriesdb/validator-php"
+  },
+  "authors": [
+    {
+      "name": "NAYEE LLC",
+      "email": "contact@nayee.net"
+    }
+  ],
+  "require": {
+    "php": "^8.0",
+    "illuminate/http": "^9.0|^10.0|^11.0|^12.0",
+    "illuminate/validation": "^9.0|^10.0|^11.0|^12.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "CountriesDB\\Validator\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CountriesDB\\Validator\\Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
+
+
+
+
+
+
+
+
+
