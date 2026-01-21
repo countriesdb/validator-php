@@ -66,13 +66,6 @@ class Validator
             return [];
         }
 
-        // Validate format
-        foreach ($codes as $code) {
-            if (empty($code) || strlen($code) !== 2) {
-                throw new \InvalidArgumentException('Invalid country code format. All codes must be 2-character strings.');
-            }
-        }
-
         try {
             $response = $this->makeRequest('/api/validate/country', [
                 'code' => array_map('strtoupper', $codes),
@@ -129,10 +122,6 @@ class Validator
      */
     public function validateSubdivisions(array $codes, string $country, bool $allowParentSelection = false): array
     {
-        if (empty($country) || strlen($country) !== 2) {
-            throw new \InvalidArgumentException('Invalid country code.');
-        }
-
         if (empty($codes)) {
             return [];
         }
